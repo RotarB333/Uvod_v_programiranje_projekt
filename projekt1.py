@@ -10,7 +10,11 @@ def pricni_igro():
     if lik == 2:
         print('Izbrali ste [ČAROVNIK],vaše poteze so: \n ...')
         player_hp = 100
-        poteze_lika = '[0]-[Zdravljenje]: pozdravi se za 30hp \n [1]-[Ognjena krogla]: 100 dmg, 67% možnost vžiga \n [2]-[Strela]: 130 dmg \n [3]-[Blokada]: blokiraj 80 dmg'
+        poteze_lika = '\
+[0]-[Zdravljenje]: pozdravi se za 30hp \n \
+[1]-[Ognjena krogla]: 100 dmg, 67% možnost vžiga \n \
+[2]-[Strela]: 130 dmg \n \
+[3]-[Blokada]: blokiraj 80 dmg'
         print('Izbrali ste [ČAROVNIK],vaše poteze so: \n ' + poteze_lika )
 
     stevilo_potez = 0

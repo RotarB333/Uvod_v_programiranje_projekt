@@ -108,7 +108,7 @@ def pricni_igro():
                  print('Ni efektivno.')
             else:
                 player_hp -= 25 - blokada
-                if random.randint(1,100) <= 100:
+                if random.randint(1,100) <= 30:
                     print('......Goriš!')
                     stanje_player = 'Goriš!'
         if 70 < boss_poteza <= 90:
@@ -117,7 +117,7 @@ def pricni_igro():
                 print('Ni efektivno.')
             else:
                 player_hp -= 35 - blokada
-                if random.randint(1,100) <= 100:
+                if random.randint(1,100) <= 50:
                     print('Zmaj te je zastrupil!')
                     stanje_player = 'Zastrupljen!'
                     strup_moc += 1

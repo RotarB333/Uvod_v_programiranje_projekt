@@ -3,6 +3,7 @@ def pricni_igro():
     lik = 0
     import random
     
+    print('KRATEK UVOD in PRAVILA')
 
 #Izbira lika    
     while lik != 1 and lik != 2:
@@ -107,7 +108,7 @@ def pricni_igro():
                  print('Ni efektivno.')
             else:
                 player_hp -= 25 - blokada
-                if random.randint(1,100) <= 25:
+                if random.randint(1,100) <= 100:
                     print('......Goriš!')
                     stanje_player = 'Goriš!'
         if 70 < boss_poteza <= 90:
@@ -116,7 +117,7 @@ def pricni_igro():
                 print('Ni efektivno.')
             else:
                 player_hp -= 35 - blokada
-                if random.randint(1,100) <= 50:
+                if random.randint(1,100) <= 100:
                     print('Zmaj te je zastrupil!')
                     stanje_player = 'Zastrupljen!'
                     strup_moc += 1

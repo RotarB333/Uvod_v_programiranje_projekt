@@ -1,0 +1,6 @@
+1:èarovnik:999
+2:èarovnik:999
+3:èarovnik:999
+4:lik:999
+5:lik:999
+6:lik:999

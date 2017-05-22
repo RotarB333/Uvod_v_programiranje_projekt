@@ -13,6 +13,7 @@ def pricni_igro():
         M_player_hp = 200
         poteze_lika = 'B1,B2,B3...'
         print('Izbrali ste [VITEZ],vaše poteze so: \n ...')
+        izbrani_lik = 'vitez'
     if lik == 2:
         player_hp = 150
         M_player_hp = 150
@@ -23,7 +24,7 @@ def pricni_igro():
 [3]-[Blokada]: blokiraj 80 dmg \n \
 [4]-[Ledena sapa]: 80 dmg, 50% možnost zamrznitve'
         print('Izbrali ste [ČAROVNIK],vaše poteze so: \n ' + poteze_lika )
-
+        izbrani_lik = 'čarovnik'
 #Začetni podatki
     stevilo_potez = 0
     boss_hp = 1000
@@ -40,7 +41,7 @@ def pricni_igro():
         stevilo_potez += 1
         izbrana_poteza = 7
         while izbrana_poteza != 0 and izbrana_poteza != 1 and izbrana_poteza != 2 and izbrana_poteza != 3 \
-        and izbrana_poteza != 4 :
+        and izbrana_poteza != 4 and izbrana_poteza != 31:
             izbrana_poteza = int(input('Izberi potezo, na voljo imas: \n ' + poteze_lika + '\n'))
             
 #Igralčeve poteze (lik_2):
@@ -74,6 +75,9 @@ def pricni_igro():
                 if random.randint(1,100) <= 50:
                     print('Zamrznitev uspešna!')
                     stanje_boss = 'Zamrznjen'
+#TEST
+            if izbrana_poteza == 31:
+                boss_hp = 0
 #Stanje igralca:
             if stanje_player == 'Goriš!':
                 player_hp -= 10
@@ -129,12 +133,53 @@ def pricni_igro():
                 player_hp -= 60 - blokada
             
             
-            
+        print('///////////////////////////////////////////') 
         
             
 #Kriterij za konec igre
     if player_hp <= 0:
         print('Umrli ste, zmaj je požgal vašo vas :( !!!')
     if boss_hp <= 0 :
-        print('Zmaga, svet je rešen, blabla. Potrebovali ste ' + str(stevilo_potez) + ' potez.')
-        
+        print('Zmaga, svet je rešen, blabla. Potrebovali ste ' +
+              str(stevilo_potez) + ' potez.')
+
+#Belezenje rekorda:
+    with open('rekordi.txt','r') as R :
+        seznam_rekordov =[]
+        for vrstica in R:
+            vrstica = vrstica.strip('\n')
+            rekord = vrstica.split(':')
+            #rekord[0] = izbrani_lik
+            #rekord[1] = stevilo_potez
+            rekord.pop(0)
+            seznam_rekordov.append(rekord)
+        mesto = 0
+        n = 0
+        for REKORD in seznam_rekordov:
+            n += 1
+            mesto += n - 1
+            if int(REKORD[1]) > stevilo_potez:
+                print('NOV REKORD!')
+                novi_rekord = [izbrani_lik,str(stevilo_potez)]
+                seznam_rekordov.insert(mesto,novi_rekord)
+                seznam_rekordov.pop()
+                with open('rekordi.txt','r+') as B : 
+                    B.seek(0)
+                    cifra = 0
+                    for Rekord in seznam_rekordov:
+                        cifra += 1
+                        text = str(cifra) + ':' + Rekord[0] + ':' + Rekord[1] + '\n'
+                        B.write(text)
+                    B.truncate()
+                    break
+                
+                    
+                
+            
+                
+                
+                
+                
+                
+            
+            

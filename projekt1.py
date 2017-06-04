@@ -18,7 +18,7 @@ def pricni_igro():
         player_hp = 150
         M_player_hp = 150
         poteze_lika = '\
-[0]-[Zdravljenje]: pozdravi se za 30hp in odstrani možne zastrupitve \n \
+[0]-[Zdravljenje]: pozdravi se za 40hp in odstrani možne zastrupitve \n \
 [1]-[Ognjena krogla]: 90 dmg, 75% možnost vžiga \n \
 [2]-[Strela]: 100 dmg, vsaka zaporedna uporaba naredi +10 dmg \n \
 [3]-[Blokada]: blokiraj 80 dmg \n \
@@ -52,9 +52,13 @@ def pricni_igro():
                 strup_moc = 0
                 player_hp += 40
                 if player_hp > M_player_hp:
-                    player_hp = 100
+                    player_hp = M_player_hp
+                print('ZDRAVLJENJE +40hp')
+                print('Igralec :[' + str(player_hp) + '/' + str(M_player_hp) + ']')
+                print('Stanje igralca:' + stanje_player)
 #[1]-[Ognjena krogla]
             if izbrana_poteza == 1:
+                print('OGNJENA KROGLA 90dmg')
                 boss_hp -= 90
                 if random.randint(1,100) <= 75:
                     print('Vžig uspešen!')
@@ -64,20 +68,29 @@ def pricni_igro():
                 strela_zap = 0
 
             if izbrana_poteza == 2:
+                print('STRELA ' + str(100 + strela_zap * 10) + 'dmg')
                 boss_hp -= 100 + strela_zap * 10
                 strela_zap += 1            
 #[3]-[Bloakada]
             if izbrana_poteza == 3:
+                print('BLOKADA +50 shield')
                 blokada = 50    
 #[4]-[Ledena sapa]
             if izbrana_poteza == 4:
+                print('LEDENA SAPA 80dmg')
                 boss_hp -= 80
                 if random.randint(1,100) <= 50:
                     print('Zamrznitev uspešna!')
                     stanje_boss = 'Zamrznjen'
 #TEST
             if izbrana_poteza == 31:
+                print('CHEAT CODE')
                 boss_hp = 0
+
+            if boss_hp < 0:
+                print('Zmaj :[0]')
+            else:
+                print('Zmaj :['+ str(boss_hp) + ']')
 #Stanje igralca:
             if stanje_player == 'Goriš!':
                 player_hp -= 10
@@ -92,22 +105,23 @@ def pricni_igro():
             print('Zmaj gori!')
             boss_hp -= 20
             print('Zmaj :['+ str(boss_hp) + ']')
-            stanje_boss = 'OK'
         if stanje_boss == 'Zamrznjen':
             print('Zmaj je to rundo zamrznjen!')
             boss_poteza = 0
-            stanje_boss = 'OK'
+        stanje_boss = 'OK'
 
-                
+        print('///////////////////////////////////////////')       
 #Poteze šefa:
+        if boss_hp <= 0:
+            boss_poteza = -1
         if 1 <= boss_poteza <= 40:
-            print('Zmaj te napade s kremplji.')
+            print('Zmaj te napade s kremplji. 10dmg')
             if blokada >= 10 :
                 print('Ni efektivno.')
             else:
                 player_hp -= 10 - blokada
         if 40 < boss_poteza <= 70:
-            print('Zmaj bruha ogenj')
+            print('Zmaj bruha ogenj. 25dmg')
             if blokada >= 25 :
                  print('Ni efektivno.')
             else:
@@ -116,7 +130,7 @@ def pricni_igro():
                     print('......Goriš!')
                     stanje_player = 'Goriš!'
         if 70 < boss_poteza <= 90:
-            print('Zmaj te je ugriznil.')
+            print('Zmaj te je ugriznil. 35dmg')
             if blokada >= 35 :
                 print('Ni efektivno.')
             else:
@@ -126,11 +140,13 @@ def pricni_igro():
                     stanje_player = 'Zastrupljen!'
                     strup_moc += 1
         if 90 < boss_poteza:
-            print('Zmaj te je udaril z repom, opraskal in vrgel z 20-ih metrov.')
+            print('Zmaj te je udaril z repom, opraskal in vrgel z 20-ih metrov. 60dmg')
             if blokada >= 60 :
                 print('Ni efektivno.')
             else:
                 player_hp -= 60 - blokada
+        if boss_poteza == 0 :
+            print('Zmaj ne more narediti ničesar!')
             
             
         print('///////////////////////////////////////////') 

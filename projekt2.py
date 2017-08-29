@@ -45,87 +45,78 @@ def start():
     usposobi()
     
 #POTEZE PLAYER-ja
-def zdravljenje():
-    global boss_poteza
-    boss_poteza.set('ZDRAVLJENJE +40hp')
+
+def zacetek_poteze():
     zmaj_gori()
-    global stevilo_potez
     stevilo_potez.set(stevilo_potez.get() + 1)
-    global player_stanje
-    global strup_moc
-    player_stanje.set('OK')
-    strup_moc.set(0)
-    global player_hp
-    player_hp.set(player_hp.get() + 40)
-    if player_hp.get() > 200:
-        player_hp.set(200)
-    global player_poteza
-    player_poteza.set('ZDRAVLJENJE +40hp!')
-    global strela_zap
-    strela_zap.set(0)
+    
+def konec_poteze():
     player_stanjeX()
     poteza_zmaj()
     preveri_igro()
 
+#def poteza(a): 
+#   zacetek_poteze()
+#   if a == 'zdravljenje':
+#        zdravljenje()
+#    elif a == 'ognjena krogla':
+#        ognjena_krogla()
+#    elif a == 'strela':
+#        strela()
+#    elif a == 'ledeni vihar':
+#        ledeni_vihar()
+#    konec_poteze
+
+# command = poteza('zdravljenje') ne deluje!, error pravi, da morajo biti vsi
+# elementi prej definirani in so definirani(spodaj), prej jih ne morem
+# definirati, ker poruši ves sistem.
+    
+def zdravljenje():
+    zacetek_poteze()
+    player_stanje.set('OK')
+    strup_moc.set(0)
+    player_hp.set(player_hp.get() + 40)
+    if player_hp.get() > 200:
+        player_hp.set(200)
+    player_poteza.set('ZDRAVLJENJE +40hp!')
+    strela_zap.set(0)
+    konec_poteze()
+   
 def ognjena_krogla():
-    zmaj_gori()
-    global stevilo_potez
-    stevilo_potez.set(stevilo_potez.get() + 1)
-    global boss_hp
+    zacetek_poteze()
     boss_hp.set(boss_hp.get() - 90)
-    global boss_stanje
-    global player_poteza
     if random.randint(1,100) <= 50:
         boss_stanje.set('GORI')
         player_poteza.set('OGNJENA KROGLA 90dmg!'+ ' Vžig uspešen 20dmg!')
     else :
         player_poteza.set('OGNJENA KROGLA 90dmg!')
-    global strela_zap
     strela_zap.set(0)
-    player_stanjeX()
-    poteza_zmaj()
-    preveri_igro()
+    konec_poteze()
 
 def strela():
-    zmaj_gori()
-    global stevilo_potez
-    stevilo_potez.set(stevilo_potez.get() + 1)
-    global boss_hp
-    global strela_zap
+    zacetek_poteze()
     boss_hp.set(boss_hp.get() - (100 + strela_zap.get() * 10))
-    global player_poteza
     player_poteza.set('STRELA 100(+' + str(strela_zap.get() * 10) + ')dmg!')
     strela_zap.set(strela_zap.get() + 1)
     if strela_zap.get() > 3:
         strela_zap.set(3)
-    player_stanjeX()
-    poteza_zmaj()
-    preveri_igro()
-
+    konec_poteze()
+        
 def leden_vihar():
-    zmaj_gori()
-    global stevilo_potez
-    stevilo_potez.set(stevilo_potez.get() + 1)
-    global boss_hp
-    boss_hp.set(boss_hp.get() - 80)
-    global boss_stanje
-    global player_poteza
+    zacetek_poteze()
+    boss_hp.set(boss_hp.get() - 80)    
     if random.randint(1,100) <= 40:
         boss_stanje.set('Zamrznjen')
-        player_poteza.set('LEDENA SAPA 80dmg!'+' Zamrznitev uspešna!')
+        player_poteza.set('LEDEN VIHAR 80dmg!'+' Zamrznitev uspešna!')
     else:
-         player_poteza.set('LEDENA SAPA 80dmg!')
-    global strela_zap
+         player_poteza.set('LEDEN VIHAR 80dmg!')
     strela_zap.set(0)
-    player_stanjeX()
-    poteza_zmaj()
-    preveri_igro()
-    
+    konec_poteze()
+
+
+
 #STANJA
 def player_stanjeX():
-    global player_stanje
-    global player_hp
-    global strup_moc
     if player_stanje.get() == 'Goriš!':
         player_hp.set(player_hp.get() - 15)
         player_stanje.set('OK')
@@ -134,22 +125,13 @@ def player_stanjeX():
         player_hp.set(player_hp.get() - 10 * strup_moc.get())
             
 def zmaj_gori():
-    global boss_stanje
-    global boss_hp
     if boss_stanje.get() == 'GORI':
-        print('Zmaj gori! 20dmg')
         boss_hp.set(boss_hp.get() - 20)
         boss_stanje.set('OK')
         
 #POTEZE BOSS-a    
 def poteza_zmaj():
     zmaj_poteza = random.randint(1,100)
-    global boss_hp
-    global boss_stanje
-    global boss_poteza
-    global player_hp
-    global player_stanje
-    global strup_moc
     if boss_hp.get() <= 0:
         boss_hp.set(0)
         zmaj_poteza = 0
@@ -177,9 +159,6 @@ def poteza_zmaj():
         
 #KONEC IGRE
 def preveri_igro():
-    global boss_hp
-    global player_hp
-    global boss_poteza
     if player_hp.get() <= 0:
         player_hp.set(0)
     if player_hp.get() == 0 and boss_hp.get() == 0:
@@ -197,7 +176,6 @@ def preveri_igro():
         
 #BELEŽENJE REKORDA
 def preveri_rekord():
-    global stevilo_potez
     with open('rekordi.txt','r') as R :
         seznam_rekordov =[]
         for vrstica in R:
@@ -210,7 +188,6 @@ def preveri_rekord():
                 return 'nov rekord'
                 
 def belezenje_rekorda():
-    global stevilo_potez
     with open('rekordi.txt','r') as R :
         seznam_rekordov =[]
         for vrstica in R:
@@ -237,6 +214,7 @@ def belezenje_rekorda():
                         B.write(text)
                     B.truncate()
                     break
+
 
 ##GRAFIČNI VMESNIK
     
@@ -271,7 +249,6 @@ def usposobi():
    strelaB.config(state = NORMAL)
    leden_viharB.config(state = NORMAL)
     
-
 #[1]NAPISI
 potezeN = Label(okno, text = 'POTEZE', bg = 'gainsboro', width = 15)
 player_potezaN = Label(okno, text = 'Poteza player:', bg = 'gainsboro', width = 15)

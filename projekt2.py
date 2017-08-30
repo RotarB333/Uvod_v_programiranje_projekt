@@ -47,26 +47,25 @@ def start():
 #POTEZE PLAYER-ja
 
 def zacetek_poteze():
-    zmaj_gori()
+    boss_gori()
     stevilo_potez.set(stevilo_potez.get() + 1)
     
 def konec_poteze():
     player_stanjeX()
-    poteza_zmaj()
+    poteza_boss()
     preveri_igro()
 
-#def poteza(a): 
-#   zacetek_poteze()
-#   if a == 'zdravljenje':
+#def poteza(a):
+#    zacetek_poteze()
+#    if a == 'zdravljenje':
 #        zdravljenje()
 #    elif a == 'ognjena krogla':
 #        ognjena_krogla()
 #    elif a == 'strela':
 #        strela()
 #    elif a == 'ledeni vihar':
-#        ledeni_vihar()
+#       ledeni_vihar()
 #    konec_poteze
-
 # command = poteza('zdravljenje') ne deluje!, error pravi, da morajo biti vsi
 # elementi prej definirani in so definirani(spodaj), prej jih ne morem
 # definirati, ker poruši ves sistem.
@@ -124,13 +123,13 @@ def player_stanjeX():
     if player_stanje.get() == 'Zastrupljen!':
         player_hp.set(player_hp.get() - 10 * strup_moc.get())
             
-def zmaj_gori():
+def boss_gori():
     if boss_stanje.get() == 'GORI':
         boss_hp.set(boss_hp.get() - 20)
         boss_stanje.set('OK')
         
 #POTEZE BOSS-a    
-def poteza_zmaj():
+def poteza_boss():
     zmaj_poteza = random.randint(1,100)
     if boss_hp.get() <= 0:
         boss_hp.set(0)

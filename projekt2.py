@@ -55,23 +55,19 @@ def konec_poteze():
     poteza_boss()
     preveri_igro()
 
-#def poteza(a):
-#    zacetek_poteze()
-#    if a == 'zdravljenje':
-#        zdravljenje()
-#    elif a == 'ognjena krogla':
-#        ognjena_krogla()
-#    elif a == 'strela':
-#        strela()
-#    elif a == 'ledeni vihar':
-#       ledeni_vihar()
-#    konec_poteze
-# command = poteza('zdravljenje') ne deluje!, error pravi, da morajo biti vsi
-# elementi prej definirani in so definirani(spodaj), prej jih ne morem
-# definirati, ker poruši ves sistem.
+def poteza(a):
+    zacetek_poteze()
+    if a == 'zdravljenje':
+        zdravljenje()
+    elif a == 'ognjena_krogla':
+        ognjena_krogla()
+    elif a == 'strela':
+        strela()
+    elif a == 'leden_vihar':
+        leden_vihar()
+    konec_poteze()
     
 def zdravljenje():
-    zacetek_poteze()
     player_stanje.set('OK')
     strup_moc.set(0)
     player_hp.set(player_hp.get() + 40)
@@ -79,10 +75,8 @@ def zdravljenje():
         player_hp.set(200)
     player_poteza.set('ZDRAVLJENJE +40hp!')
     strela_zap.set(0)
-    konec_poteze()
    
 def ognjena_krogla():
-    zacetek_poteze()
     boss_hp.set(boss_hp.get() - 90)
     if random.randint(1,100) <= 50:
         boss_stanje.set('GORI')
@@ -90,19 +84,15 @@ def ognjena_krogla():
     else :
         player_poteza.set('OGNJENA KROGLA 90dmg!')
     strela_zap.set(0)
-    konec_poteze()
 
 def strela():
-    zacetek_poteze()
     boss_hp.set(boss_hp.get() - (100 + strela_zap.get() * 10))
     player_poteza.set('STRELA 100(+' + str(strela_zap.get() * 10) + ')dmg!')
     strela_zap.set(strela_zap.get() + 1)
     if strela_zap.get() > 3:
         strela_zap.set(3)
-    konec_poteze()
         
 def leden_vihar():
-    zacetek_poteze()
     boss_hp.set(boss_hp.get() - 80)    
     if random.randint(1,100) <= 40:
         boss_stanje.set('Zamrznjen')
@@ -110,9 +100,6 @@ def leden_vihar():
     else:
          player_poteza.set('LEDEN VIHAR 80dmg!')
     strela_zap.set(0)
-    konec_poteze()
-
-
 
 #STANJA
 def player_stanjeX():
@@ -215,14 +202,15 @@ def belezenje_rekorda():
                     break
 
 
+
 ##GRAFIČNI VMESNIK
     
 #[0]GUMBI    
 nova_igraB = Button(okno, text = 'Nova igra', command = start, width = 15)
-zdravljenjeB = Button(okno, text = 'ZDRAVLJENJE', command = zdravljenje, width = 15)
-ognjena_kroglaB = Button(okno, text = 'OGNJENA KROGLA', command = ognjena_krogla, width = 15)
-strelaB = Button(okno, text = 'STRELA', command = strela, width = 15)
-leden_viharB = Button(okno, text = 'LEDEN VIHAR', command = leden_vihar, width = 15)
+zdravljenjeB = Button(okno, text = 'ZDRAVLJENJE', command = lambda:poteza('zdravljenje'), width = 15)
+ognjena_kroglaB = Button(okno, text = 'OGNJENA KROGLA', command = lambda:poteza('ognjena_krogla'), width = 15)
+strelaB = Button(okno, text = 'STRELA', command = lambda:poteza('strela'), width = 15)
+leden_viharB = Button(okno, text = 'LEDEN VIHAR', command = lambda:poteza('leden_vihar') , width = 15)
 
 nova_igraB.grid(row = 0, column = 0)
 zdravljenjeB.grid(row = 2, column = 0)
